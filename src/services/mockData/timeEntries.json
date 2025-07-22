@@ -1,0 +1,50 @@
+[
+  {
+    "Id": 1,
+    "employeeId": 1,
+    "clockIn": "2024-01-15T09:00:00Z",
+    "clockOut": "2024-01-15T17:30:00Z",
+    "totalHours": 8.5,
+    "date": "2024-01-15"
+  },
+  {
+    "Id": 2,
+    "employeeId": 2,
+    "clockIn": "2024-01-15T08:45:00Z",
+    "clockOut": "2024-01-15T17:15:00Z",
+    "totalHours": 8.5,
+    "date": "2024-01-15"
+  },
+  {
+    "Id": 3,
+    "employeeId": 3,
+    "clockIn": "2024-01-15T09:15:00Z",
+    "clockOut": "2024-01-15T18:00:00Z",
+    "totalHours": 8.75,
+    "date": "2024-01-15"
+  },
+  {
+    "Id": 4,
+    "employeeId": 5,
+    "clockIn": "2024-01-15T08:30:00Z",
+    "clockOut": "2024-01-15T17:00:00Z",
+    "totalHours": 8.5,
+    "date": "2024-01-15"
+  },
+  {
+    "Id": 5,
+    "employeeId": 6,
+    "clockIn": "2024-01-15T09:00:00Z",
+    "clockOut": "2024-01-15T17:30:00Z",
+    "totalHours": 8.5,
+    "date": "2024-01-15"
+  },
+  {
+    "Id": 6,
+    "employeeId": 7,
+    "clockIn": "2024-01-15T08:45:00Z",
+    "clockOut": "2024-01-15T17:45:00Z",
+    "totalHours": 9.0,
+    "date": "2024-01-15"
+  }
+]

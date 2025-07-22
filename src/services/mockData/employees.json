@@ -1,0 +1,138 @@
+[
+  {
+    "Id": 1,
+    "firstName": "John",
+    "lastName": "Smith",
+    "email": "john.smith@company.com",
+    "phone": "(555) 123-4567",
+    "role": "Senior Developer",
+    "department": "Engineering",
+    "hireDate": "2023-01-15",
+    "status": "active",
+    "photoUrl": "",
+    "emergencyContact": {
+      "name": "Sarah Smith",
+      "phone": "(555) 987-6543",
+      "relationship": "Spouse"
+    }
+  },
+  {
+    "Id": 2,
+    "firstName": "Emily",
+    "lastName": "Johnson",
+    "email": "emily.johnson@company.com",
+    "phone": "(555) 234-5678",
+    "role": "Product Manager",
+    "department": "Product",
+    "hireDate": "2023-03-20",
+    "status": "active",
+    "photoUrl": "",
+    "emergencyContact": {
+      "name": "Michael Johnson",
+      "phone": "(555) 876-5432",
+      "relationship": "Father"
+    }
+  },
+  {
+    "Id": 3,
+    "firstName": "Michael",
+    "lastName": "Brown",
+    "email": "michael.brown@company.com",
+    "phone": "(555) 345-6789",
+    "role": "UX Designer",
+    "department": "Design",
+    "hireDate": "2022-11-10",
+    "status": "active",
+    "photoUrl": "",
+    "emergencyContact": {
+      "name": "Lisa Brown",
+      "phone": "(555) 765-4321",
+      "relationship": "Sister"
+    }
+  },
+  {
+    "Id": 4,
+    "firstName": "Sarah",
+    "lastName": "Davis",
+    "email": "sarah.davis@company.com",
+    "phone": "(555) 456-7890",
+    "role": "Marketing Specialist",
+    "department": "Marketing",
+    "hireDate": "2023-05-05",
+    "status": "on-leave",
+    "photoUrl": "",
+    "emergencyContact": {
+      "name": "James Davis",
+      "phone": "(555) 654-3210",
+      "relationship": "Husband"
+    }
+  },
+  {
+    "Id": 5,
+    "firstName": "David",
+    "lastName": "Wilson",
+    "email": "david.wilson@company.com",
+    "phone": "(555) 567-8901",
+    "role": "Sales Manager",
+    "department": "Sales",
+    "hireDate": "2022-08-15",
+    "status": "active",
+    "photoUrl": "",
+    "emergencyContact": {
+      "name": "Maria Wilson",
+      "phone": "(555) 543-2109",
+      "relationship": "Wife"
+    }
+  },
+  {
+    "Id": 6,
+    "firstName": "Jessica",
+    "lastName": "Martinez",
+    "email": "jessica.martinez@company.com",
+    "phone": "(555) 678-9012",
+    "role": "HR Coordinator",
+    "department": "Human Resources",
+    "hireDate": "2023-02-28",
+    "status": "active",
+    "photoUrl": "",
+    "emergencyContact": {
+      "name": "Carlos Martinez",
+      "phone": "(555) 432-1098",
+      "relationship": "Brother"
+    }
+  },
+  {
+    "Id": 7,
+    "firstName": "Robert",
+    "lastName": "Anderson",
+    "email": "robert.anderson@company.com",
+    "phone": "(555) 789-0123",
+    "role": "DevOps Engineer",
+    "department": "Engineering",
+    "hireDate": "2022-12-01",
+    "status": "active",
+    "photoUrl": "",
+    "emergencyContact": {
+      "name": "Jennifer Anderson",
+      "phone": "(555) 321-0987",
+      "relationship": "Mother"
+    }
+  },
+  {
+    "Id": 8,
+    "firstName": "Amanda",
+    "lastName": "Taylor",
+    "email": "amanda.taylor@company.com",
+    "phone": "(555) 890-1234",
+    "role": "Financial Analyst",
+    "department": "Finance",
+    "hireDate": "2023-04-12",
+    "status": "inactive",
+    "photoUrl": "",
+    "emergencyContact": {
+      "name": "Thomas Taylor",
+      "phone": "(555) 210-9876",
+      "relationship": "Father"
+    }
+  }
+]
