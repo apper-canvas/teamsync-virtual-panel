@@ -1,15 +1,15 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useEmployees } from "@/hooks/useEmployees";
-import EmployeeCard from "@/components/organisms/EmployeeCard";
+import { toast } from "react-toastify";
+import ApperIcon from "@/components/ApperIcon";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
 import EmployeeForm from "@/components/organisms/EmployeeForm";
+import EmployeeCard from "@/components/organisms/EmployeeCard";
 import SearchBar from "@/components/molecules/SearchBar";
 import Button from "@/components/atoms/Button";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
-import ApperIcon from "@/components/ApperIcon";
-import { toast } from "react-toastify";
 
 const FilterTabs = ({ activeFilter, onFilterChange }) => {
   const filters = [
@@ -146,9 +146,8 @@ const Employees = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-
-  // Filter employees based on active filter
-  useState(() => {
+// Filter employees based on active filter
+  useEffect(() => {
     let filtered = employees;
     
     if (activeFilter !== "all") {
@@ -157,7 +156,6 @@ const Employees = () => {
     
     setFilteredEmployees(filtered);
   }, [employees, activeFilter]);
-
   const handleSearch = async (query) => {
     setSearchQuery(query);
     try {
