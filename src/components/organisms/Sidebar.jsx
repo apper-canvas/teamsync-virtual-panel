@@ -5,11 +5,12 @@ import ApperIcon from "@/components/ApperIcon";
 const Sidebar = ({ isOpen, onClose, isMobile }) => {
   const location = useLocation();
   
-  const menuItems = [
+const menuItems = [
     { path: "/", icon: "LayoutDashboard", label: "Dashboard" },
     { path: "/employees", icon: "Users", label: "Employees" },
     { path: "/departments", icon: "Building2", label: "Departments" },
-    { path: "/time-tracking", icon: "Clock", label: "Time Tracking" }
+    { path: "/time-tracking", icon: "Clock", label: "Time Tracking" },
+    { path: "/leave-requests", icon: "Calendar", label: "Leave Requests" }
   ];
 
   const sidebarContent = (

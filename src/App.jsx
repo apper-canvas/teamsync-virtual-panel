@@ -5,17 +5,18 @@ import Dashboard from "@/components/pages/Dashboard";
 import Employees from "@/components/pages/Employees";
 import Departments from "@/components/pages/Departments";
 import TimeTracking from "@/components/pages/TimeTracking";
-
+import LeaveRequests from "@/components/pages/LeaveRequests";
 function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-        <Routes>
+<Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Dashboard />} />
             <Route path="employees" element={<Employees />} />
             <Route path="departments" element={<Departments />} />
             <Route path="time-tracking" element={<TimeTracking />} />
+            <Route path="leave-requests" element={<LeaveRequests />} />
           </Route>
         </Routes>
         

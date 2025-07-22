@@ -1,14 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ApperIcon from "@/components/ApperIcon";
 import SearchBar from "@/components/molecules/SearchBar";
 import Button from "@/components/atoms/Button";
+import leaveRequestService from "@/services/api/leaveRequestService";
 
 const Header = ({ onMenuClick, onSearch, title = "Dashboard" }) => {
-  const [notifications] = useState([
+  const [notifications, setNotifications] = useState([
     { id: 1, message: "New employee John Smith has been added", time: "2 min ago" },
     { id: 2, message: "Department meeting scheduled for 3 PM", time: "1 hour ago" }
   ]);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [pendingLeaveRequests, setPendingLeaveRequests] = useState([]);
 
+  useEffect(() => {
+    const loadPendingRequests = async () => {
+      try {
+        const requests = await leaveRequestService.getAll();
+        const pending = requests.filter(req => req.status === 'pending');
+        setPendingLeaveRequests(pending);
+        
+        // Add leave request notifications
+        const leaveNotifications = pending.map(req => ({
+          id: `leave-${req.Id}`,
+          message: `${req.employeeName} requested ${req.leaveType} leave`,
+          time: new Date(req.createdAt).toLocaleDateString(),
+          type: 'leave-request',
+          requestId: req.Id
+        }));
+        
+        setNotifications(prev => [
+          ...leaveNotifications,
+          ...prev.filter(n => !n.type || n.type !== 'leave-request')
+        ]);
+      } catch (error) {
+        console.error('Failed to load pending requests:', error);
+      }
+    };
+
+    loadPendingRequests();
+  }, []);
   return (
     <header className="bg-white/80 backdrop-blur-lg border-b border-slate-200/50 px-6 py-4 sticky top-0 z-30">
       <div className="flex items-center justify-between">
@@ -35,10 +65,14 @@ const Header = ({ onMenuClick, onSearch, title = "Dashboard" }) => {
         )}
 
         {/* Right side */}
-        <div className="flex items-center space-x-4">
+<div className="flex items-center space-x-4">
           {/* Notifications */}
           <div className="relative">
-            <Button variant="ghost" className="relative p-2">
+            <Button 
+              variant="ghost" 
+              className="relative p-2"
+              onClick={() => setShowNotifications(!showNotifications)}
+            >
               <ApperIcon name="Bell" className="w-5 h-5" />
               {notifications.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
@@ -46,6 +80,47 @@ const Header = ({ onMenuClick, onSearch, title = "Dashboard" }) => {
                 </span>
               )}
             </Button>
+            
+            {/* Notification Dropdown */}
+            {showNotifications && (
+              <div className="absolute right-0 top-12 w-80 bg-white rounded-lg shadow-lg border border-slate-200 z-50 max-h-96 overflow-y-auto">
+                <div className="p-4 border-b border-slate-200">
+                  <h3 className="font-semibold text-slate-800">Notifications</h3>
+                </div>
+                <div className="divide-y divide-slate-100">
+                  {notifications.length === 0 ? (
+                    <div className="p-4 text-center text-slate-500">
+                      <ApperIcon name="Bell" className="w-8 h-8 mx-auto mb-2 text-slate-300" />
+                      <p>No notifications</p>
+                    </div>
+                  ) : (
+                    notifications.map((notification) => (
+                      <div key={notification.id} className="p-4 hover:bg-slate-50 transition-colors">
+                        <div className="flex items-start space-x-3">
+                          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                            <ApperIcon 
+                              name={notification.type === 'leave-request' ? 'Calendar' : 'Bell'} 
+                              className="w-4 h-4 text-white" 
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm text-slate-800 font-medium">{notification.message}</p>
+                            <p className="text-xs text-slate-500 mt-1">{notification.time}</p>
+                            {notification.type === 'leave-request' && (
+                              <div className="flex space-x-2 mt-2">
+                                <Button size="sm" variant="primary" className="text-xs px-2 py-1">
+                                  Review
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Quick Actions */}
