@@ -5,7 +5,7 @@ import Button from "@/components/atoms/Button";
 
 const EmployeeCard = ({ employee, onEdit, onView, onDelete }) => {
   const getInitials = (firstName, lastName) => {
-    return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`.toUpperCase();
+return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`.toUpperCase();
   };
 
   return (
@@ -18,10 +18,10 @@ const EmployeeCard = ({ employee, onEdit, onView, onDelete }) => {
       {/* Header with Photo and Basic Info */}
       <div className="flex items-start space-x-4 mb-4">
         <div className="relative">
-          {employee.photoUrl ? (
+{employee.photo_url_c ? (
             <img
-              src={employee.photoUrl}
-              alt={`${employee.firstName} ${employee.lastName}`}
+              src={employee.photo_url_c}
+              alt={`${employee.first_name_c} ${employee.last_name_c}`}
               className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-md"
             />
           ) : (
@@ -32,16 +32,16 @@ const EmployeeCard = ({ employee, onEdit, onView, onDelete }) => {
             </div>
           )}
           <div className="absolute -bottom-1 -right-1">
-            <StatusBadge status={employee.status} />
+<StatusBadge status={employee.status_c} />
           </div>
         </div>
 
         <div className="flex-1">
           <h3 className="font-semibold text-lg text-slate-800">
-            {employee.firstName} {employee.lastName}
+{employee.first_name_c} {employee.last_name_c}
           </h3>
-          <p className="text-primary-600 font-medium">{employee.role}</p>
-          <p className="text-slate-500 text-sm">{employee.department}</p>
+<p className="text-primary-600 font-medium">{employee.role_c}</p>
+<p className="text-slate-500 text-sm">{employee.department_c}</p>
         </div>
 
         {/* Actions Dropdown */}
@@ -81,15 +81,15 @@ const EmployeeCard = ({ employee, onEdit, onView, onDelete }) => {
       <div className="space-y-2 mb-4">
         <div className="flex items-center text-sm text-slate-600">
           <ApperIcon name="Mail" className="w-4 h-4 mr-2" />
-          <span className="truncate">{employee.email}</span>
+<span className="truncate">{employee.email_c}</span>
         </div>
         <div className="flex items-center text-sm text-slate-600">
           <ApperIcon name="Phone" className="w-4 h-4 mr-2" />
-          <span>{employee.phone}</span>
+<span>{employee.phone_c}</span>
         </div>
         <div className="flex items-center text-sm text-slate-600">
           <ApperIcon name="Calendar" className="w-4 h-4 mr-2" />
-          <span>Joined {new Date(employee.hireDate).toLocaleDateString()}</span>
+<span>Joined {new Date(employee.hire_date_c).toLocaleDateString()}</span>
         </div>
       </div>
 

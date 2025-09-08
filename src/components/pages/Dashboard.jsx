@@ -163,9 +163,9 @@ const Dashboard = () => {
   const [dashboardStats, setDashboardStats] = useState(null);
 
   useEffect(() => {
-    if (!employeesLoading && !departmentsLoading) {
-      const activeEmployees = employees.filter(emp => emp.status === "active");
-      const onLeaveEmployees = employees.filter(emp => emp.status === "on-leave");
+if (!employeesLoading && !departmentsLoading) {
+      const activeEmployees = employees.filter(emp => emp.status_c === "active");
+      const onLeaveEmployees = employees.filter(emp => emp.status_c === "on-leave");
       
       setDashboardStats([
         {

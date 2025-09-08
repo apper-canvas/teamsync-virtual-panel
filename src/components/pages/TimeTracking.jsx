@@ -37,33 +37,33 @@ const TimeEntryRow = ({ entry, employee }) => {
           </div>
           <div>
             <div className="font-medium text-slate-800">
-              {employee ? `${employee.firstName} ${employee.lastName}` : `Employee #${entry.employeeId}`}
+{employee ? `${employee.first_name_c} ${employee.last_name_c}` : `Employee #${entry.employee_id_c}`}
             </div>
             <div className="text-sm text-slate-500">
-              {employee?.role || "Unknown Role"}
+{employee?.role_c || "Unknown Role"}
             </div>
           </div>
         </div>
       </td>
       <td className="px-6 py-4">
         <div className="flex items-center space-x-2">
-          <div className={`w-3 h-3 rounded-full ${isToday(new Date(entry.date)) ? "bg-green-500" : "bg-slate-300"}`} />
+<div className={`w-3 h-3 rounded-full ${isToday(new Date(entry.date_c)) ? "bg-green-500" : "bg-slate-300"}`} />
           <span className="text-sm text-slate-700">
-            {format(new Date(entry.date), "MMM d, yyyy")}
+{format(new Date(entry.date_c), "MMM d, yyyy")}
           </span>
         </div>
       </td>
       <td className="px-6 py-4">
         <div className="flex items-center space-x-2 text-green-600">
           <ApperIcon name="LogIn" className="w-4 h-4" />
-          <span className="font-medium">{formatTime(entry.clockIn)}</span>
+<span className="font-medium">{formatTime(entry.clock_in_c)}</span>
         </div>
       </td>
       <td className="px-6 py-4">
-        {entry.clockOut ? (
+{entry.clock_out_c ? (
           <div className="flex items-center space-x-2 text-red-600">
             <ApperIcon name="LogOut" className="w-4 h-4" />
-            <span className="font-medium">{formatTime(entry.clockOut)}</span>
+<span className="font-medium">{formatTime(entry.clock_out_c)}</span>
           </div>
         ) : (
           <div className="flex items-center space-x-2 text-orange-600">
@@ -75,9 +75,9 @@ const TimeEntryRow = ({ entry, employee }) => {
       <td className="px-6 py-4">
         <div className="text-right">
           <div className="font-semibold text-slate-800">
-            {formatDuration(entry.totalHours)}
+{formatDuration(entry.total_hours_c)}
           </div>
-          {entry.totalHours >= 8 && (
+{entry.total_hours_c >= 8 && (
             <div className="text-xs text-green-600 mt-1">Full Day</div>
           )}
         </div>
@@ -105,7 +105,7 @@ const WeeklyHoursCard = ({ employee, totalHours, entries }) => {
       <div className="flex items-center space-x-4 mb-4">
         <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
           <span className="text-white font-semibold">
-            {employee ? `${employee.firstName.charAt(0)}${employee.lastName.charAt(0)}` : "ME"}
+{employee ? `${employee.first_name_c.charAt(0)}${employee.last_name_c.charAt(0)}` : "ME"}
           </span>
         </div>
         <div>
@@ -154,8 +154,8 @@ const WeeklyHoursCard = ({ employee, totalHours, entries }) => {
             {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day, index) => {
               const weekStart = startOfWeek(new Date(), { weekStartsOn: 1 });
               const dayDate = addDays(weekStart, index);
-              const dayEntry = entries.find(entry => 
-                format(new Date(entry.date), "yyyy-MM-dd") === format(dayDate, "yyyy-MM-dd")
+const dayEntry = entries.find(entry => 
+                format(new Date(entry.date_c), "yyyy-MM-dd") === format(dayDate, "yyyy-MM-dd")
               );
               
               return (
@@ -242,7 +242,7 @@ const TimeTracking = () => {
   };
 
   const getEmployeeById = (employeeId) => {
-    return employees.find(emp => emp.Id === employeeId);
+return employees.find(emp => emp.Id === employeeId);
   };
 
   const currentEmployee = getEmployeeById(1); // Assuming current user ID is 1

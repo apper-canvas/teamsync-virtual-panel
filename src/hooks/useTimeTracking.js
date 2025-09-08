@@ -1,84 +1,120 @@
-import { useState, useEffect } from "react";
-import timeTrackingService from "@/services/api/timeTrackingService";
+import { useState, useEffect } from 'react';
+import timeTrackingService from '@/services/api/timeTrackingService';
 
-export const useTimeTracking = (employeeId = 1) => {
+export const useTimeTracking = () => {
   const [timeEntries, setTimeEntries] = useState([]);
   const [currentEntry, setCurrentEntry] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   const loadTimeEntries = async () => {
     try {
       setLoading(true);
-      setError("");
-      const [entries, current] = await Promise.all([
-        timeTrackingService.getByEmployeeId(employeeId),
-        timeTrackingService.getCurrentEntry()
-      ]);
-      setTimeEntries(entries);
+      setError(null);
+      const data = await timeTrackingService.getAll();
+      setTimeEntries(data);
+      
+      // Load current entry
+      const current = await timeTrackingService.getCurrentEntry();
       setCurrentEntry(current);
     } catch (err) {
-      setError("Failed to load time entries. Please try again.");
-      console.error("Error loading time entries:", err);
+      setError(err.message);
+      console.error('Error loading time entries:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  const clockIn = async () => {
+  const clockIn = async (employeeId = 1) => {
     try {
-      setError("");
       const entry = await timeTrackingService.clockIn(employeeId);
       setCurrentEntry(entry);
       return entry;
     } catch (err) {
-      setError("Failed to clock in. Please try again.");
-      console.error("Error clocking in:", err);
+      console.error('Error clocking in:', err);
       throw err;
     }
   };
 
   const clockOut = async () => {
     try {
-      setError("");
       const entry = await timeTrackingService.clockOut();
-      setTimeEntries(prev => [...prev, entry]);
+      setTimeEntries(prev => [entry, ...prev]);
       setCurrentEntry(null);
       return entry;
     } catch (err) {
-      setError("Failed to clock out. Please try again.");
-      console.error("Error clocking out:", err);
+      console.error('Error clocking out:', err);
       throw err;
     }
   };
 
   const getTodaysEntries = async () => {
     try {
-      setError("");
       const entries = await timeTrackingService.getTodaysEntries();
       return entries;
     } catch (err) {
-      setError("Failed to load today's entries. Please try again.");
-      console.error("Error loading today's entries:", err);
+      console.error('Error getting today\'s entries:', err);
       throw err;
     }
   };
 
-  const getWeeklyHours = async (weekStart) => {
+  const getWeeklyHours = async (employeeId = 1, weekStart = new Date()) => {
     try {
-      setError("");
       const data = await timeTrackingService.getWeeklyHours(employeeId, weekStart);
       return data;
     } catch (err) {
-      setError("Failed to load weekly hours. Please try again.");
-      console.error("Error loading weekly hours:", err);
+      console.error('Error getting weekly hours:', err);
+      throw err;
+    }
+  };
+
+  const getByEmployeeId = async (employeeId) => {
+    try {
+      const entries = await timeTrackingService.getByEmployeeId(employeeId);
+      return entries;
+    } catch (err) {
+      console.error('Error getting entries by employee:', err);
+      throw err;
+    }
+  };
+
+  const createTimeEntry = async (entryData) => {
+    try {
+      const newEntry = await timeTrackingService.create(entryData);
+      setTimeEntries(prev => [newEntry, ...prev]);
+      return newEntry;
+    } catch (err) {
+      console.error('Error creating time entry:', err);
+      throw err;
+    }
+  };
+
+  const updateTimeEntry = async (id, entryData) => {
+    try {
+      const updatedEntry = await timeTrackingService.update(id, entryData);
+      setTimeEntries(prev => 
+        prev.map(entry => entry.Id === parseInt(id) ? updatedEntry : entry)
+      );
+      return updatedEntry;
+    } catch (err) {
+      console.error('Error updating time entry:', err);
+      throw err;
+    }
+  };
+
+  const deleteTimeEntry = async (id) => {
+    try {
+      await timeTrackingService.delete(id);
+      setTimeEntries(prev => prev.filter(entry => entry.Id !== parseInt(id)));
+    } catch (err) {
+      console.error('Error deleting time entry:', err);
       throw err;
     }
   };
 
   useEffect(() => {
     loadTimeEntries();
-  }, [employeeId]);
+  }, []);
 
   return {
     timeEntries,
@@ -89,6 +125,10 @@ export const useTimeTracking = (employeeId = 1) => {
     clockIn,
     clockOut,
     getTodaysEntries,
-    getWeeklyHours
+    getWeeklyHours,
+    getByEmployeeId,
+    createTimeEntry,
+    updateTimeEntry,
+    deleteTimeEntry
   };
 };

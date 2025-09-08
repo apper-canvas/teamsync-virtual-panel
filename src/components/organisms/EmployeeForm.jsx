@@ -5,51 +5,51 @@ import Button from "@/components/atoms/Button";
 import FormField from "@/components/molecules/FormField";
 
 const EmployeeForm = ({ employee, onSubmit, onCancel, isOpen }) => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    role: "",
-    department: "",
-    hireDate: "",
-    status: "active",
-    emergencyContact: {
-      name: "",
-      phone: "",
-      relationship: ""
-    }
+const [formData, setFormData] = useState({
+    first_name_c: "",
+    last_name_c: "",
+    email_c: "",
+    phone_c: "",
+    role_c: "",
+    department_c: "",
+    hire_date_c: "",
+    status_c: "active",
+    emergency_contact_name_c: "",
+    emergency_contact_phone_c: "",
+    emergency_contact_relationship_c: ""
   });
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (employee) {
+if (employee) {
       setFormData({
-        ...employee,
-        hireDate: employee.hireDate ? new Date(employee.hireDate).toISOString().split("T")[0] : "",
-        emergencyContact: employee.emergencyContact || {
-          name: "",
-          phone: "",
-          relationship: ""
-        }
+        first_name_c: employee.first_name_c || "",
+        last_name_c: employee.last_name_c || "",
+        email_c: employee.email_c || "",
+        phone_c: employee.phone_c || "",
+        role_c: employee.role_c || "",
+        department_c: employee.department_c || "",
+        hire_date_c: employee.hire_date_c ? new Date(employee.hire_date_c).toISOString().split("T")[0] : "",
+        status_c: employee.status_c || "active",
+        emergency_contact_name_c: employee.emergency_contact_name_c || "",
+        emergency_contact_phone_c: employee.emergency_contact_phone_c || "",
+        emergency_contact_relationship_c: employee.emergency_contact_relationship_c || ""
       });
     } else {
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        role: "",
-        department: "",
-        hireDate: "",
-        status: "active",
-        emergencyContact: {
-          name: "",
-          phone: "",
-          relationship: ""
-        }
+setFormData({
+        first_name_c: "",
+        last_name_c: "",
+        email_c: "",
+        phone_c: "",
+        role_c: "",
+        department_c: "",
+        hire_date_c: "",
+        status_c: "active",
+        emergency_contact_name_c: "",
+        emergency_contact_phone_c: "",
+        emergency_contact_relationship_c: ""
       });
     }
     setErrors({});
@@ -86,15 +86,14 @@ const EmployeeForm = ({ employee, onSubmit, onCancel, isOpen }) => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Invalid email format";
-    if (!formData.phone.trim()) newErrors.phone = "Phone is required";
-    if (!formData.role.trim()) newErrors.role = "Role is required";
-    if (!formData.department.trim()) newErrors.department = "Department is required";
-    if (!formData.hireDate) newErrors.hireDate = "Hire date is required";
-
+if (!formData.first_name_c.trim()) newErrors.first_name_c = "First name is required";
+    if (!formData.last_name_c.trim()) newErrors.last_name_c = "Last name is required";
+    if (!formData.email_c.trim()) newErrors.email_c = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(formData.email_c)) newErrors.email_c = "Invalid email format";
+    if (!formData.phone_c.trim()) newErrors.phone_c = "Phone is required";
+    if (!formData.role_c.trim()) newErrors.role_c = "Role is required";
+    if (!formData.department_c.trim()) newErrors.department_c = "Department is required";
+    if (!formData.hire_date_c) newErrors.hire_date_c = "Hire date is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -150,17 +149,19 @@ const EmployeeForm = ({ employee, onSubmit, onCancel, isOpen }) => {
                 label="First Name"
                 id="firstName"
                 name="firstName"
-                value={formData.firstName}
+name="first_name_c"
+                value={formData.first_name_c}
                 onChange={handleChange}
-                error={errors.firstName}
+                error={errors.first_name_c}
                 required
               />
               <FormField
                 label="Last Name"
                 id="lastName"
-                name="lastName"
-                value={formData.lastName}
+name="last_name_c"
+                value={formData.last_name_c}
                 onChange={handleChange}
+                error={errors.last_name_c}
                 error={errors.lastName}
                 required
               />
@@ -169,18 +170,20 @@ const EmployeeForm = ({ employee, onSubmit, onCancel, isOpen }) => {
                 id="email"
                 type="email"
                 name="email"
-                value={formData.email}
+name="email_c"
+                value={formData.email_c}
                 onChange={handleChange}
-                error={errors.email}
+                error={errors.email_c}
                 required
               />
               <FormField
                 label="Phone"
                 id="phone"
                 name="phone"
-                value={formData.phone}
+name="phone_c"
+                value={formData.phone_c}
                 onChange={handleChange}
-                error={errors.phone}
+                error={errors.phone_c}
                 required
               />
             </div>
@@ -194,17 +197,19 @@ const EmployeeForm = ({ employee, onSubmit, onCancel, isOpen }) => {
                 label="Role/Position"
                 id="role"
                 name="role"
-                value={formData.role}
+name="role_c"
+                value={formData.role_c}
                 onChange={handleChange}
-                error={errors.role}
+                error={errors.role_c}
                 required
               />
               <FormField
                 label="Department"
                 id="department"
-                name="department"
-                value={formData.department}
+name="department_c"
+                value={formData.department_c}
                 onChange={handleChange}
+                error={errors.department_c}
                 error={errors.department}
                 required
               />
@@ -213,9 +218,10 @@ const EmployeeForm = ({ employee, onSubmit, onCancel, isOpen }) => {
                 id="hireDate"
                 type="date"
                 name="hireDate"
-                value={formData.hireDate}
+name="hire_date_c"
+                value={formData.hire_date_c}
                 onChange={handleChange}
-                error={errors.hireDate}
+                error={errors.hire_date_c}
                 required
               />
               <FormField
@@ -225,7 +231,8 @@ const EmployeeForm = ({ employee, onSubmit, onCancel, isOpen }) => {
                 <select
                   id="status"
                   name="status"
-                  value={formData.status}
+name="status_c"
+                  value={formData.status_c}
                   onChange={handleChange}
                   className="input-field"
                 >
@@ -244,22 +251,22 @@ const EmployeeForm = ({ employee, onSubmit, onCancel, isOpen }) => {
               <FormField
                 label="Contact Name"
                 id="emergencyContactName"
-                name="emergencyContact.name"
-                value={formData.emergencyContact.name}
+name="emergency_contact_name_c"
+                value={formData.emergency_contact_name_c}
                 onChange={handleChange}
               />
               <FormField
                 label="Contact Phone"
                 id="emergencyContactPhone"
-                name="emergencyContact.phone"
-                value={formData.emergencyContact.phone}
+name="emergency_contact_phone_c"
+                value={formData.emergency_contact_phone_c}
                 onChange={handleChange}
               />
               <FormField
                 label="Relationship"
                 id="emergencyContactRelationship"
-                name="emergencyContact.relationship"
-                value={formData.emergencyContact.relationship}
+name="emergency_contact_relationship_c"
+                value={formData.emergency_contact_relationship_c}
                 onChange={handleChange}
                 placeholder="e.g., Spouse, Parent"
               />

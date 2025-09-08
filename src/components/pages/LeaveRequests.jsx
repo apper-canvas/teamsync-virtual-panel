@@ -41,9 +41,9 @@ const LeaveRequests = () => {
 
       const updatedRequest = {
         ...request,
-        status: action,
-        reviewedAt: new Date().toISOString(),
-        reviewedBy: "HR Manager" // In real app, would come from auth context
+status_c: action,
+        reviewed_at_c: new Date().toISOString(),
+        reviewed_by_c: "HR Manager" // In real app, would come from auth context
       };
 
       await leaveRequestService.update(requestId, updatedRequest);
@@ -84,14 +84,14 @@ const LeaveRequests = () => {
 
   const filteredRequests = requests.filter(request => {
     if (filterStatus === "all") return true;
-    return request.status === filterStatus;
+return request.status_c === filterStatus;
   });
 
   const stats = {
-    total: requests.length,
-    pending: requests.filter(r => r.status === 'pending').length,
-    approved: requests.filter(r => r.status === 'approved').length,
-    denied: requests.filter(r => r.status === 'denied').length
+total: requests.length,
+    pending: requests.filter(r => r.status_c === 'pending').length,
+    approved: requests.filter(r => r.status_c === 'approved').length,
+    denied: requests.filter(r => r.status_c === 'denied').length
   };
 
   if (loading) {
@@ -254,15 +254,15 @@ const LeaveRequests = () => {
                         <ApperIcon name="User" className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-slate-800">{request.employeeName}</h3>
-                        <p className="text-sm text-slate-500">{request.leaveType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())} Leave</p>
+<h3 className="font-semibold text-slate-800">{request.employee_name_c}</h3>
+                        <p className="text-sm text-slate-500">{request.leave_type_c.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())} Leave</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <StatusBadge variant={getStatusVariant(request.status)}>
+<StatusBadge variant={getStatusVariant(request.status_c)}>
                         {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
                       </StatusBadge>
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${getUrgencyColor(request.urgency)}`}>
+<span className={`px-2 py-1 rounded text-xs font-medium ${getUrgencyColor(request.urgency_c)}`}>
                         {request.urgency.toUpperCase()}
                       </span>
                     </div>
@@ -272,11 +272,11 @@ const LeaveRequests = () => {
                     <div className="flex items-center space-x-2">
                       <ApperIcon name="Calendar" className="w-4 h-4 text-slate-400" />
                       <span className="text-slate-600">
-                        {format(new Date(request.startDate), 'MMM dd')} - {format(new Date(request.endDate), 'MMM dd, yyyy')}
+{format(new Date(request.start_date_c), 'MMM dd')} - {format(new Date(request.end_date_c), 'MMM dd, yyyy')}
                       </span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <ApperIcon name="Clock" className="w-4 h-4 text-slate-400" />
+<span>{request.total_days_c} day{request.total_days_c !== 1 ? 's' : ''}</span>
                       <span className="text-slate-600">{request.totalDays} days</span>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -288,13 +288,13 @@ const LeaveRequests = () => {
                   <div className="bg-slate-50 rounded-lg p-3">
                     <p className="text-sm text-slate-700">
                       <span className="font-medium">Reason: </span>
-                      {request.reason}
+{request.reason_c}
                     </p>
                   </div>
                 </div>
 
                 {/* Manager Actions */}
-                {userRole === 'manager' && request.status === 'pending' && (
+{userRole === 'manager' && request.status_c === 'pending' && (
                   <div className="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-2">
                     <Button
                       variant="primary"
@@ -318,10 +318,10 @@ const LeaveRequests = () => {
                 )}
 
                 {/* Status Info for Reviewed Requests */}
-                {request.status !== 'pending' && request.reviewedAt && (
+{request.status_c !== 'pending' && request.reviewed_at_c && (
                   <div className="text-xs text-slate-500 lg:text-right">
-                    <p>{request.status.charAt(0).toUpperCase() + request.status.slice(1)} by {request.reviewedBy}</p>
-                    <p>{format(new Date(request.reviewedAt), 'MMM dd, yyyy')}</p>
+                    <p>{request.status_c.charAt(0).toUpperCase() + request.status_c.slice(1)} by {request.reviewed_by_c}</p>
+                    <p>{format(new Date(request.reviewed_at_c), 'MMM dd, yyyy')}</p>
                   </div>
                 )}
               </div>

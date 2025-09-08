@@ -80,21 +80,21 @@ const EmployeeList = ({ employees, onEdit, onView, onDelete }) => {
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
                 <span className="text-white font-semibold">
-                  {employee.firstName.charAt(0)}{employee.lastName.charAt(0)}
+{employee.first_name_c.charAt(0)}{employee.last_name_c.charAt(0)}
                 </span>
               </div>
               <div>
                 <h3 className="font-semibold text-slate-800">
-                  {employee.firstName} {employee.lastName}
+                  {employee.first_name_c} {employee.last_name_c}
                 </h3>
-                <p className="text-primary-600 font-medium">{employee.role}</p>
-                <p className="text-slate-500 text-sm">{employee.department}</p>
+                <p className="text-primary-600 font-medium">{employee.role_c}</p>
+                <p className="text-slate-500 text-sm">{employee.department_c}</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="text-right">
-                <p className="text-sm text-slate-600">{employee.email}</p>
-                <p className="text-sm text-slate-500">{employee.phone}</p>
+<div className="text-right">
+                <p className="text-sm text-slate-600">{employee.email_c}</p>
+                <p className="text-sm text-slate-500">{employee.phone_c}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <Button
@@ -150,8 +150,8 @@ const Employees = () => {
   useEffect(() => {
     let filtered = employees;
     
-    if (activeFilter !== "all") {
-      filtered = employees.filter(emp => emp.status === activeFilter);
+if (activeFilter !== "all") {
+      filtered = employees.filter(emp => emp.status_c === activeFilter);
     }
     
     setFilteredEmployees(filtered);
@@ -162,8 +162,8 @@ const Employees = () => {
       const results = await searchEmployees(query);
       let filtered = results;
       
-      if (activeFilter !== "all") {
-        filtered = results.filter(emp => emp.status === activeFilter);
+if (activeFilter !== "all") {
+        filtered = results.filter(emp => emp.status_c === activeFilter);
       }
       
       setFilteredEmployees(filtered);
@@ -177,18 +177,18 @@ const Employees = () => {
     let filtered = employees;
     
     if (filter !== "all") {
-      filtered = employees.filter(emp => emp.status === filter);
+filtered = employees.filter(emp => emp.status_c === filter);
     }
     
     // Apply search query if exists
     if (searchQuery) {
       const searchTerm = searchQuery.toLowerCase();
       filtered = filtered.filter(emp => 
-        emp.firstName.toLowerCase().includes(searchTerm) ||
-        emp.lastName.toLowerCase().includes(searchTerm) ||
-        emp.email.toLowerCase().includes(searchTerm) ||
-        emp.role.toLowerCase().includes(searchTerm) ||
-        emp.department.toLowerCase().includes(searchTerm)
+        emp.first_name_c.toLowerCase().includes(searchTerm) ||
+        emp.last_name_c.toLowerCase().includes(searchTerm) ||
+        emp.email_c.toLowerCase().includes(searchTerm) ||
+        emp.role_c.toLowerCase().includes(searchTerm) ||
+        emp.department_c.toLowerCase().includes(searchTerm)
       );
     }
     
@@ -207,7 +207,7 @@ const Employees = () => {
 
   const handleViewEmployee = (employee) => {
     // In a real app, this would navigate to employee detail page
-    toast.info(`Viewing ${employee.firstName} ${employee.lastName}`);
+toast.info(`Viewing ${employee.first_name_c} ${employee.last_name_c}`);
   };
 
   const handleDeleteEmployee = async (employee) => {

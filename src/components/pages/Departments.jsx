@@ -1,19 +1,20 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useDepartments } from "@/hooks/useDepartments";
 import { useEmployees } from "@/hooks/useEmployees";
-import Button from "@/components/atoms/Button";
-import Loading from "@/components/ui/Loading";
+import { toast } from "react-toastify";
+import ApperIcon from "@/components/ApperIcon";
 import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
-import ApperIcon from "@/components/ApperIcon";
-import { toast } from "react-toastify";
+import Loading from "@/components/ui/Loading";
+import Button from "@/components/atoms/Button";
+import Employees from "@/components/pages/Employees";
 
 const DepartmentCard = ({ department, employees, onEdit, onDelete }) => {
-  const departmentEmployees = employees.filter(emp => emp.department === department.name);
-  const activeEmployees = departmentEmployees.filter(emp => emp.status === "active");
+const departmentEmployees = employees.filter(emp => emp.department_c === department.Name);
+  const activeEmployees = departmentEmployees.filter(emp => emp.status_c === "active");
   
-  const manager = employees.find(emp => emp.Id === department.managerId);
+const manager = employees.find(emp => emp.Id === department.manager_id_c);
 
   return (
     <motion.div
@@ -29,8 +30,8 @@ const DepartmentCard = ({ department, employees, onEdit, onDelete }) => {
             <ApperIcon name="Building2" className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-800">{department.name}</h3>
-            <p className="text-slate-600 text-sm">{department.description}</p>
+<h3 className="text-lg font-bold text-slate-800">{department.Name}</h3>
+            <p className="text-slate-600 text-sm">{department.description_c}</p>
           </div>
         </div>
         
@@ -71,13 +72,13 @@ const DepartmentCard = ({ department, employees, onEdit, onDelete }) => {
         <div className="mb-4 p-3 bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-semibold">
-                {manager.firstName.charAt(0)}{manager.lastName.charAt(0)}
+<span className="text-white text-sm font-semibold">
+                {manager.first_name_c?.charAt(0)}{manager.last_name_c?.charAt(0)}
               </span>
             </div>
             <div>
               <div className="text-sm font-medium text-slate-800">
-                {manager.firstName} {manager.lastName}
+                {manager.first_name_c} {manager.last_name_c}
               </div>
               <div className="text-xs text-slate-500">Department Manager</div>
             </div>
@@ -93,24 +94,24 @@ const DepartmentCard = ({ department, employees, onEdit, onDelete }) => {
             {departmentEmployees.slice(0, 3).map((employee) => (
               <div key={employee.Id} className="flex items-center space-x-3 text-sm">
                 <div className="w-6 h-6 bg-gradient-to-br from-slate-300 to-slate-400 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xs">
-                    {employee.firstName.charAt(0)}
+<span className="text-white text-xs">
+                    {employee.first_name_c?.charAt(0)}
                   </span>
                 </div>
-                <span className="text-slate-700">{employee.firstName} {employee.lastName}</span>
+                <span className="text-slate-800 font-medium">{employee.first_name_c} {employee.last_name_c}</span>
                 <div className={`px-2 py-1 rounded-full text-xs ${
-                  employee.status === "active" 
+                  employee.status_c === "active" 
                     ? "bg-green-100 text-green-700"
-                    : employee.status === "on-leave"
+                    : employee.status_c === "on-leave"
                     ? "bg-yellow-100 text-yellow-700"
                     : "bg-red-100 text-red-700"
                 }`}>
-                  {employee.status === "on-leave" ? "On Leave" : employee.status}
+                  {employee.status_c === "on-leave" ? "On Leave" : employee.status_c}
                 </div>
               </div>
             ))}
             {departmentEmployees.length > 3 && (
-              <div className="text-xs text-slate-500 pl-9">
+              <div className="text-xs text-slate-500">
                 +{departmentEmployees.length - 3} more members
               </div>
             )}
@@ -128,35 +129,35 @@ const DepartmentCard = ({ department, employees, onEdit, onDelete }) => {
 
 const DepartmentForm = ({ department, onSubmit, onCancel, isOpen, employees }) => {
   const [formData, setFormData] = useState({
-    name: "",
-    managerId: "",
-    description: ""
+Name: "",
+    manager_id_c: "",
+    description_c: ""
   });
 
   const [errors, setErrors] = useState({});
 
-  useState(() => {
+React.useEffect(() => {
     if (department) {
       setFormData({
-        name: department.name || "",
-        managerId: department.managerId || "",
-        description: department.description || ""
+        Name: department.Name || "",
+        manager_id_c: department.manager_id_c || "",
+        description_c: department.description_c || ""
       });
     } else {
       setFormData({
-        name: "",
-        managerId: "",
-        description: ""
+        Name: "",
+        manager_id_c: "",
+        description_c: ""
       });
     }
     setErrors({});
   }, [department, isOpen]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: name === "managerId" ? parseInt(value) || "" : value
+      [name]: name === "manager_id_c" ? parseInt(value) || "" : value
     }));
 
     if (errors[name]) {
@@ -167,8 +168,8 @@ const DepartmentForm = ({ department, onSubmit, onCancel, isOpen, employees }) =
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.name.trim()) newErrors.name = "Department name is required";
-    if (!formData.description.trim()) newErrors.description = "Description is required";
+if (!formData.Name.trim()) newErrors.Name = "Department name is required";
+    if (!formData.description_c.trim()) newErrors.description_c = "Description is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -215,16 +216,16 @@ const DepartmentForm = ({ department, onSubmit, onCancel, isOpen, employees }) =
             <label className="text-sm font-medium text-slate-700 mb-2 block">
               Department Name *
             </label>
-            <input
+<input
               type="text"
-              name="name"
-              value={formData.name}
+              name="Name"
+              value={formData.Name}
               onChange={handleChange}
               className="input-field"
               placeholder="e.g., Human Resources"
             />
-            {errors.name && (
-              <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+            {errors.Name && (
+              <p className="mt-1 text-sm text-red-600">{errors.Name}</p>
             )}
           </div>
 
@@ -232,16 +233,16 @@ const DepartmentForm = ({ department, onSubmit, onCancel, isOpen, employees }) =
             <label className="text-sm font-medium text-slate-700 mb-2 block">
               Manager
             </label>
-            <select
-              name="managerId"
-              value={formData.managerId}
+<select
+              name="manager_id_c"
+              value={formData.manager_id_c}
               onChange={handleChange}
               className="input-field"
             >
               <option value="">Select Manager (Optional)</option>
               {employees.map(employee => (
                 <option key={employee.Id} value={employee.Id}>
-                  {employee.firstName} {employee.lastName} - {employee.role}
+                  {employee.first_name_c} {employee.last_name_c} - {employee.role_c}
                 </option>
               ))}
             </select>
@@ -251,16 +252,16 @@ const DepartmentForm = ({ department, onSubmit, onCancel, isOpen, employees }) =
             <label className="text-sm font-medium text-slate-700 mb-2 block">
               Description *
             </label>
-            <textarea
-              name="description"
-              value={formData.description}
+<textarea
+              name="description_c"
+              value={formData.description_c}
               onChange={handleChange}
               rows={3}
               className="input-field resize-none"
               placeholder="Brief description of the department..."
             />
-            {errors.description && (
-              <p className="mt-1 text-sm text-red-600">{errors.description}</p>
+            {errors.description_c && (
+              <p className="mt-1 text-sm text-red-600">{errors.description_c}</p>
             )}
           </div>
 
@@ -298,14 +299,13 @@ const Departments = () => {
   };
 
   const handleDeleteDepartment = async (department) => {
-    const departmentEmployees = employees.filter(emp => emp.department === department.name);
-    
+const departmentEmployees = employees.filter(emp => emp.department_c === department.Name);
     if (departmentEmployees.length > 0) {
       toast.error("Cannot delete department with active employees. Please reassign employees first.");
       return;
     }
 
-    if (window.confirm(`Are you sure you want to delete ${department.name} department?`)) {
+if (window.confirm(`Are you sure you want to delete ${department.Name} department?`)) {
       try {
         await deleteDepartment(department.Id);
         toast.success("Department deleted successfully!");

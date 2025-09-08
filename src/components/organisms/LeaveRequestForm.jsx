@@ -7,13 +7,13 @@ import FormField from "@/components/molecules/FormField";
 import leaveRequestService from "@/services/api/leaveRequestService";
 
 const LeaveRequestForm = ({ onSubmit, onCancel }) => {
-  const [formData, setFormData] = useState({
-    employeeName: "John Doe", // In real app, would come from auth context
-    leaveType: "",
-    startDate: "",
-    endDate: "",
-    reason: "",
-    urgency: "normal"
+const [formData, setFormData] = useState({
+    employee_name_c: "John Doe", // In real app, would come from auth context
+    leave_type_c: "",
+    start_date_c: "",
+    end_date_c: "",
+    reason_c: "",
+    urgency_c: "normal"
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,37 +46,37 @@ const LeaveRequestForm = ({ onSubmit, onCancel }) => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.leaveType) {
-      newErrors.leaveType = "Leave type is required";
+if (!formData.leave_type_c) {
+      newErrors.leave_type_c = "Leave type is required";
     }
 
-    if (!formData.startDate) {
-      newErrors.startDate = "Start date is required";
+    if (!formData.start_date_c) {
+      newErrors.start_date_c = "Start date is required";
     }
 
-    if (!formData.endDate) {
-      newErrors.endDate = "End date is required";
+    if (!formData.end_date_c) {
+      newErrors.end_date_c = "End date is required";
     }
 
-    if (formData.startDate && formData.endDate) {
-      const start = new Date(formData.startDate);
-      const end = new Date(formData.endDate);
+    if (formData.start_date_c && formData.end_date_c) {
+      const start = new Date(formData.start_date_c);
+      const end = new Date(formData.end_date_c);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
       if (start < today) {
-        newErrors.startDate = "Start date cannot be in the past";
+        newErrors.start_date_c = "Start date cannot be in the past";
       }
 
       if (end < start) {
-        newErrors.endDate = "End date must be after start date";
+        newErrors.end_date_c = "End date must be after start date";
       }
     }
 
-    if (!formData.reason.trim()) {
-      newErrors.reason = "Reason is required";
-    } else if (formData.reason.trim().length < 10) {
-      newErrors.reason = "Reason must be at least 10 characters long";
+    if (!formData.reason_c.trim()) {
+      newErrors.reason_c = "Reason is required";
+    } else if (formData.reason_c.trim().length < 10) {
+      newErrors.reason_c = "Reason must be at least 10 characters long";
     }
 
     setErrors(newErrors);
@@ -84,9 +84,9 @@ const LeaveRequestForm = ({ onSubmit, onCancel }) => {
   };
 
   const calculateDays = () => {
-    if (!formData.startDate || !formData.endDate) return 0;
-    const start = new Date(formData.startDate);
-    const end = new Date(formData.endDate);
+if (!formData.start_date_c || !formData.end_date_c) return 0;
+    const start = new Date(formData.start_date_c);
+    const end = new Date(formData.end_date_c);
     const diffTime = Math.abs(end - start);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
     return diffDays;
@@ -103,12 +103,12 @@ const LeaveRequestForm = ({ onSubmit, onCancel }) => {
     setIsSubmitting(true);
 
     try {
-      const requestData = {
+const requestData = {
         ...formData,
-        totalDays: calculateDays(),
-        status: "pending",
-        createdAt: new Date().toISOString(),
-        managerId: 1 // In real app, would be determined by employee's department
+        total_days_c: calculateDays(),
+        status_c: "pending",
+        created_at_c: new Date().toISOString(),
+        manager_id_c: 1 // In real app, would be determined by employee's department
       };
 
       await leaveRequestService.create(requestData);
@@ -120,13 +120,13 @@ const LeaveRequestForm = ({ onSubmit, onCancel }) => {
       }
 
       // Reset form
-      setFormData({
-        employeeName: "John Doe",
-        leaveType: "",
-        startDate: "",
-        endDate: "",
-        reason: "",
-        urgency: "normal"
+setFormData({
+        employee_name_c: "John Doe",
+        leave_type_c: "",
+        start_date_c: "",
+        end_date_c: "",
+        reason_c: "",
+        urgency_c: "normal"
       });
 
     } catch (error) {
@@ -164,7 +164,7 @@ const LeaveRequestForm = ({ onSubmit, onCancel }) => {
         {/* Employee Name (Read-only) */}
         <FormField label="Employee Name" error={errors.employeeName}>
           <div className="input-field bg-slate-50 text-slate-600 cursor-not-allowed">
-            {formData.employeeName}
+{formData.employee_name_c}
           </div>
         </FormField>
 
@@ -172,8 +172,10 @@ const LeaveRequestForm = ({ onSubmit, onCancel }) => {
         <FormField label="Leave Type" error={errors.leaveType} required>
           <select
             name="leaveType"
-            value={formData.leaveType}
+name="leave_type_c"
+            value={formData.leave_type_c}
             onChange={handleChange}
+            error={errors.leave_type_c}
             className="input-field"
             required
           >
@@ -192,8 +194,10 @@ const LeaveRequestForm = ({ onSubmit, onCancel }) => {
             <input
               type="date"
               name="startDate"
-              value={formData.startDate}
+name="start_date_c"
+              value={formData.start_date_c}
               onChange={handleChange}
+              error={errors.start_date_c}
               className="input-field"
               required
             />
@@ -204,7 +208,10 @@ const LeaveRequestForm = ({ onSubmit, onCancel }) => {
               type="date"
               name="endDate"
               value={formData.endDate}
+name="end_date_c"
+              value={formData.end_date_c}
               onChange={handleChange}
+              error={errors.end_date_c}
               className="input-field"
               required
             />
@@ -212,7 +219,7 @@ const LeaveRequestForm = ({ onSubmit, onCancel }) => {
         </div>
 
         {/* Total Days Display */}
-        {formData.startDate && formData.endDate && (
+{formData.start_date_c && formData.end_date_c && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <div className="flex items-center space-x-2">
               <ApperIcon name="Calendar" className="w-5 h-5 text-blue-600" />
@@ -226,8 +233,8 @@ const LeaveRequestForm = ({ onSubmit, onCancel }) => {
         {/* Urgency */}
         <FormField label="Urgency Level">
           <select
-            name="urgency"
-            value={formData.urgency}
+name="urgency_c"
+            value={formData.urgency_c}
             onChange={handleChange}
             className="input-field"
           >
@@ -242,14 +249,16 @@ const LeaveRequestForm = ({ onSubmit, onCancel }) => {
         <FormField label="Reason for Leave" error={errors.reason} required>
           <textarea
             name="reason"
-            value={formData.reason}
+name="reason_c"
+            value={formData.reason_c}
             onChange={handleChange}
+            error={errors.reason_c}
             placeholder="Please provide a detailed reason for your leave request..."
             className="input-field min-h-[120px] resize-vertical"
             required
           />
           <p className="text-xs text-slate-500 mt-1">
-            Minimum 10 characters ({formData.reason.length}/10)
+Minimum 10 characters ({formData.reason_c.length}/10)
           </p>
         </FormField>
 
