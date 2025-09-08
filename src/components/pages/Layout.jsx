@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "@/components/organisms/Sidebar";
-import { Header } from "@/components/organisms/Header";
+import Header from "@/components/organisms/Header";
 
 const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
