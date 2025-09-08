@@ -171,7 +171,6 @@ setFormData({
         {/* Leave Type */}
         <FormField label="Leave Type" error={errors.leaveType} required>
           <select
-            name="leaveType"
 name="leave_type_c"
             value={formData.leave_type_c}
             onChange={handleChange}
@@ -193,7 +192,6 @@ name="leave_type_c"
           <FormField label="Start Date" error={errors.startDate} required>
             <input
               type="date"
-              name="startDate"
 name="start_date_c"
               value={formData.start_date_c}
               onChange={handleChange}
@@ -206,8 +204,6 @@ name="start_date_c"
           <FormField label="End Date" error={errors.endDate} required>
             <input
               type="date"
-              name="endDate"
-              value={formData.endDate}
 name="end_date_c"
               value={formData.end_date_c}
               onChange={handleChange}
@@ -248,7 +244,6 @@ name="urgency_c"
         {/* Reason */}
         <FormField label="Reason for Leave" error={errors.reason} required>
           <textarea
-            name="reason"
 name="reason_c"
             value={formData.reason_c}
             onChange={handleChange}

@@ -148,7 +148,6 @@ if (!formData.first_name_c.trim()) newErrors.first_name_c = "First name is requi
               <FormField
                 label="First Name"
                 id="firstName"
-                name="firstName"
 name="first_name_c"
                 value={formData.first_name_c}
                 onChange={handleChange}
@@ -161,15 +160,13 @@ name="first_name_c"
 name="last_name_c"
                 value={formData.last_name_c}
                 onChange={handleChange}
-                error={errors.last_name_c}
-                error={errors.lastName}
+error={errors.last_name_c}
                 required
               />
               <FormField
                 label="Email"
                 id="email"
                 type="email"
-                name="email"
 name="email_c"
                 value={formData.email_c}
                 onChange={handleChange}
@@ -179,7 +176,6 @@ name="email_c"
               <FormField
                 label="Phone"
                 id="phone"
-                name="phone"
 name="phone_c"
                 value={formData.phone_c}
                 onChange={handleChange}
@@ -196,7 +192,6 @@ name="phone_c"
               <FormField
                 label="Role/Position"
                 id="role"
-                name="role"
 name="role_c"
                 value={formData.role_c}
                 onChange={handleChange}
@@ -209,15 +204,13 @@ name="role_c"
 name="department_c"
                 value={formData.department_c}
                 onChange={handleChange}
-                error={errors.department_c}
-                error={errors.department}
+error={errors.department_c}
                 required
               />
               <FormField
                 label="Hire Date"
                 id="hireDate"
                 type="date"
-                name="hireDate"
 name="hire_date_c"
                 value={formData.hire_date_c}
                 onChange={handleChange}
@@ -230,7 +223,6 @@ name="hire_date_c"
               >
                 <select
                   id="status"
-                  name="status"
 name="status_c"
                   value={formData.status_c}
                   onChange={handleChange}
