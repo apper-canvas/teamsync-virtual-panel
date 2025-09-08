@@ -5,6 +5,7 @@ import SearchBar from "@/components/molecules/SearchBar";
 import Button from "@/components/atoms/Button";
 import leaveRequestService from "@/services/api/leaveRequestService";
 const Header = ({ onMenuClick, onSearch, title = "Dashboard" }) => {
+  const { logout } = useContext(AuthContext);
   const [notifications, setNotifications] = useState([
     { id: 1, message: "New employee John Smith has been added", time: "2 min ago" },
     { id: 2, message: "Department meeting scheduled for 3 PM", time: "1 hour ago" }
@@ -120,27 +121,19 @@ const requests = await leaveRequestService.getAll();
                     <p className="text-xs text-slate-500">Administrator</p>
                 </div>
                 <Button
-                    variant="ghost"
+variant="ghost"
                     size="sm"
                     onClick={() => {
-                        const {
-                            logout
-                        } = React.useContext(AuthContext);
-
                         logout();
                     }}
                     className="text-slate-600 hover:text-red-600">
                     <ApperIcon name="LogOut" className="w-4 h-4 mr-1" />Logout
                                 </Button>
             </div>
-            <Button
+<Button
                 variant="ghost"
                 size="sm"
                 onClick={() => {
-                    const {
-                        logout
-                    } = useContext(AuthContext);
-
                     logout();
                 }}
                 className="text-slate-600 hover:text-red-600">
